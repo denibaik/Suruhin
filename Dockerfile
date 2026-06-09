@@ -21,6 +21,8 @@ RUN bun run build
 FROM node:22-alpine AS runner
 WORKDIR /app
 
+# package.json diperlukan agar Node.js tahu ini ESM ("type": "module")
+COPY --from=builder /app/package.json ./package.json
 # Lovable config output ke dist/ bukan .output/
 COPY --from=builder /app/dist ./dist
 
