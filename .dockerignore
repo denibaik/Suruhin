@@ -1,0 +1,10 @@
+node_modules
+.output
+.git
+.github
+.lovable
+*.md
+.env*
+.prettierrc
+.prettierignore
+eslint.config.js
