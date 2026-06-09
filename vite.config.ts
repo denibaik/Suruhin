@@ -1,20 +1,9 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import tailwindcss from "@tailwindcss/vite";
-import tsConfigPaths from "vite-tsconfig-paths";
-import { tanstackStart } from "@tanstack/react-start/vite";
+import { defineConfig } from "@lovable.dev/vite-tanstack-config";
 
-// Konfigurasi untuk deployment Node.js (Azure App Service)
-// Jalankan: NITRO_PRESET=node-server bun run build
+// NITRO_PRESET=node-server sudah di-set di Dockerfile (ENV),
+// sehingga target build otomatis Node.js bukan Cloudflare.
 export default defineConfig({
-  plugins: [
-    tsConfigPaths(),
-    tailwindcss(),
-    tanstackStart({
-      server: {
-        entry: "server",
-      },
-    }),
-    react(),
-  ],
+  tanstackStart: {
+    server: { entry: "server" },
+  },
 });

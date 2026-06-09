@@ -14,6 +14,7 @@ COPY . .
 # Build dengan target Node.js untuk deployment
 ENV NITRO_PRESET=node-server
 RUN bun run build
+# Note: NITRO_PRESET=node-server di atas akan override target Cloudflare dari Lovable config
 
 # ================================
 # Stage 2: Production (lebih kecil)
