@@ -24,6 +24,7 @@ WORKDIR /app
 # Lovable config output ke dist/ bukan .output/
 COPY --from=builder /app/dist ./dist
 
+ENV HOST=0.0.0.0
 ENV PORT=8080
 EXPOSE 8080
 
