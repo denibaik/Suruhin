@@ -4,29 +4,27 @@
 FROM oven/bun:1-alpine AS builder
 WORKDIR /app
 
-# Install dependencies terlebih dahulu (cache layer)
+# Install dependencies
 COPY package.json bun.lock* ./
 RUN bun install
 
 # Copy semua source code
 COPY . .
 
-# Build dengan target Node.js untuk deployment
+# Build — NITRO_PRESET override Cloudflare default dari Lovable config
 ENV NITRO_PRESET=node-server
 RUN bun run build
-# Note: NITRO_PRESET=node-server di atas akan override target Cloudflare dari Lovable config
 
 # ================================
-# Stage 2: Production (lebih kecil)
+# Stage 2: Production
 # ================================
 FROM node:22-alpine AS runner
 WORKDIR /app
 
-# Hanya copy hasil build
-COPY --from=builder /app/.output ./.output
+# Lovable config output ke dist/ bukan .output/
+COPY --from=builder /app/dist ./dist
 
-# Port yang digunakan Digital Ocean App Platform
 ENV PORT=8080
 EXPOSE 8080
 
-CMD ["node", ".output/server/index.mjs"]
+CMD ["node", "dist/server/server.js"]
