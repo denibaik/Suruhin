@@ -14,7 +14,11 @@ export function Footer() {
             </p>
             <div className="mt-6 flex gap-3">
               {[Facebook, Instagram, Twitter, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-primary">
+                <a
+                  key={i}
+                  href="#"
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition hover:bg-primary"
+                >
                   <Icon className="h-4 w-4" />
                 </a>
               ))}
@@ -23,29 +27,66 @@ export function Footer() {
           <div>
             <h4 className="mb-4 text-sm font-semibold">Perusahaan</h4>
             <ul className="space-y-2 text-sm text-white/70">
-              <li><a href="#" className="hover:text-primary">Tentang Kami</a></li>
-              <li><a href="#" className="hover:text-primary">Karir</a></li>
-              <li><a href="#" className="hover:text-primary">Blog</a></li>
-              <li><a href="#" className="hover:text-primary">Pers</a></li>
+              <li>
+                <a href="#" className="hover:text-primary">
+                  Tentang Kami
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary">
+                  Karir
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary">
+                  Pers
+                </a>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="mb-4 text-sm font-semibold">Dukungan</h4>
             <ul className="space-y-2 text-sm text-white/70">
-              <li><a href="#" className="hover:text-primary">Pusat Bantuan</a></li>
-              <li><a href="#" className="hover:text-primary">Kebijakan Privasi</a></li>
-              <li><a href="#" className="hover:text-primary">Syarat Layanan</a></li>
-              <li><a href="#" className="hover:text-primary">Hubungi Kami</a></li>
+              <li>
+                <a href="#" className="hover:text-primary">
+                  Pusat Bantuan
+                </a>
+              </li>
+              <li>
+                <Link to="/privacy" className="hover:text-primary">
+                  Kebijakan Privasi
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="hover:text-primary">
+                  Syarat Layanan
+                </Link>
+              </li>
+              <li>
+                <a href="#" className="hover:text-primary">
+                  Hubungi Kami
+                </a>
+              </li>
             </ul>
           </div>
           <div>
             <h4 className="mb-4 text-sm font-semibold">Hubungi Kami</h4>
             <ul className="space-y-2 text-sm text-white/70">
-              <li className="flex items-center gap-2"><Mail className="h-4 w-4" /> hello@suruhin.id</li>
+              <li className="flex items-center gap-2">
+                <Mail className="h-4 w-4" /> hello@suruhin.id
+              </li>
               <li>Jakarta, Indonesia</li>
               <li>+62 812 3456 7890</li>
             </ul>
-            <Link to="/register" className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90">
+            <Link
+              to="/register"
+              className="mt-4 inline-block rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground hover:opacity-90"
+            >
               Gabung Suruhin
             </Link>
           </div>
