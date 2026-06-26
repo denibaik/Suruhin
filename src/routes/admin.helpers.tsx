@@ -5,6 +5,7 @@ import {
   Users,
   UserCheck,
   ListChecks,
+  LayoutTemplate,
   Search,
   Eye,
   Star,
@@ -18,6 +19,7 @@ const adminNavItems = [
   { to: "/admin/users", label: "Pengguna", icon: Users },
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
+  { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
 ];
 
 export const Route = createFileRoute("/admin/helpers")({

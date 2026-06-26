@@ -1,40 +1,40 @@
 import { Star } from "lucide-react";
+import {
+  defaultLandingContent,
+  type SectionHeading,
+  type TestimonialItem,
+} from "./landing-content";
 
-const items = [
-  {
-    name: "Andini Pratiwi",
-    role: "Mahasiswa, Universitas Indonesia",
-    quote: "Suruhin nyelametin gue banget pas lagi sibuk skripsi. Helper-nya cepet dan ramah!",
-    initials: "AP",
-  },
-  {
-    name: "Budi Santoso",
-    role: "Freelance Designer",
-    quote: "Praktis banget buat antrian bank dan urus dokumen. Hemat waktu, harga juga transparan.",
-    initials: "BS",
-  },
-  {
-    name: "Citra Ramadhani",
-    role: "Founder, Kopiteria",
-    quote: "Suruhin jadi andalan tim kami buat errand kantor. Quality helpers, top rating!",
-    initials: "CR",
-  },
-];
+interface TestimonialsProps {
+  heading?: SectionHeading;
+  items?: TestimonialItem[];
+}
 
-export function Testimonials() {
+export function Testimonials({
+  heading = defaultLandingContent.testimonials.heading,
+  items = defaultLandingContent.testimonials.items,
+}: TestimonialsProps) {
   return (
     <section id="testimonials" className="bg-muted/40 py-20 lg:py-28">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-2xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-wider text-primary">Testimoni</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Dicintai oleh ribuan pengguna</h2>
+          <p className="text-sm font-semibold uppercase tracking-wider text-primary">
+            {heading.eyebrow}
+          </p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">{heading.title}</h2>
+          {heading.subtitle && (
+            <p className="mt-4 text-lg text-muted-foreground">{heading.subtitle}</p>
+          )}
         </div>
         <div className="mt-16 grid gap-6 md:grid-cols-3">
-          {items.map((t) => (
-            <div key={t.name} className="rounded-2xl bg-card p-8 shadow-soft transition hover:shadow-card">
+          {items.map((t, i) => (
+            <div
+              key={i}
+              className="rounded-2xl bg-card p-8 shadow-soft transition hover:shadow-card"
+            >
               <div className="flex gap-1 text-primary">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star key={i} className="h-4 w-4 fill-current" />
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <Star key={s} className="h-4 w-4 fill-current" />
                 ))}
               </div>
               <p className="mt-4 text-foreground">"{t.quote}"</p>

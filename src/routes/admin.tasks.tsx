@@ -5,6 +5,7 @@ import {
   Users,
   UserCheck,
   ListChecks,
+  LayoutTemplate,
   Search,
   Package,
 } from "lucide-react";
@@ -14,6 +15,7 @@ const adminNavItems = [
   { to: "/admin/users", label: "Pengguna", icon: Users },
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
+  { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
 ];
 
 export const Route = createFileRoute("/admin/tasks")({
@@ -34,16 +36,96 @@ interface DummyTask {
 }
 
 const dummyTasks: DummyTask[] = [
-  { id: "TSK-001", title: "Beli kopi di Starbucks SCBD", user: "Andini P.", helper: "Rizky H.", status: "Selesai", budget: "Rp 85.000", date: "10 Jun 2025" },
-  { id: "TSK-002", title: "Antri di Bank BCA Sudirman", user: "Budi S.", helper: "Dian P.", status: "Dikerjakan", budget: "Rp 120.000", date: "10 Jun 2025" },
-  { id: "TSK-003", title: "Kirim dokumen ke kantor notaris", user: "Citra R.", helper: null, status: "Menunggu", budget: "Rp 75.000", date: "10 Jun 2025" },
-  { id: "TSK-004", title: "Print & jilid skripsi Depok", user: "Dimas H.", helper: "Siti N.", status: "Selesai", budget: "Rp 60.000", date: "9 Jun 2025" },
-  { id: "TSK-005", title: "Beli obat di apotek K-24", user: "Eka W.", helper: "Rizky H.", status: "Selesai", budget: "Rp 200.000", date: "9 Jun 2025" },
-  { id: "TSK-006", title: "Antar paket ke JNE Kebon Jeruk", user: "Fajar N.", helper: null, status: "Dibatalkan", budget: "Rp 50.000", date: "8 Jun 2025" },
-  { id: "TSK-007", title: "Beli bunga untuk dekorasi kantor", user: "Gita L.", helper: "Dian P.", status: "Dikerjakan", budget: "Rp 350.000", date: "8 Jun 2025" },
-  { id: "TSK-008", title: "Belanja groceries Superindo", user: "Hendra W.", helper: null, status: "Menunggu", budget: "Rp 450.000", date: "8 Jun 2025" },
-  { id: "TSK-009", title: "Bayar tagihan PLN di Alfamart", user: "Andini P.", helper: "Siti N.", status: "Selesai", budget: "Rp 40.000", date: "7 Jun 2025" },
-  { id: "TSK-010", title: "Daftar antrian BPJS Kesehatan", user: "Budi S.", helper: null, status: "Dibatalkan", budget: "Rp 90.000", date: "7 Jun 2025" },
+  {
+    id: "TSK-001",
+    title: "Beli kopi di Starbucks SCBD",
+    user: "Andini P.",
+    helper: "Rizky H.",
+    status: "Selesai",
+    budget: "Rp 85.000",
+    date: "10 Jun 2025",
+  },
+  {
+    id: "TSK-002",
+    title: "Antri di Bank BCA Sudirman",
+    user: "Budi S.",
+    helper: "Dian P.",
+    status: "Dikerjakan",
+    budget: "Rp 120.000",
+    date: "10 Jun 2025",
+  },
+  {
+    id: "TSK-003",
+    title: "Kirim dokumen ke kantor notaris",
+    user: "Citra R.",
+    helper: null,
+    status: "Menunggu",
+    budget: "Rp 75.000",
+    date: "10 Jun 2025",
+  },
+  {
+    id: "TSK-004",
+    title: "Print & jilid skripsi Depok",
+    user: "Dimas H.",
+    helper: "Siti N.",
+    status: "Selesai",
+    budget: "Rp 60.000",
+    date: "9 Jun 2025",
+  },
+  {
+    id: "TSK-005",
+    title: "Beli obat di apotek K-24",
+    user: "Eka W.",
+    helper: "Rizky H.",
+    status: "Selesai",
+    budget: "Rp 200.000",
+    date: "9 Jun 2025",
+  },
+  {
+    id: "TSK-006",
+    title: "Antar paket ke JNE Kebon Jeruk",
+    user: "Fajar N.",
+    helper: null,
+    status: "Dibatalkan",
+    budget: "Rp 50.000",
+    date: "8 Jun 2025",
+  },
+  {
+    id: "TSK-007",
+    title: "Beli bunga untuk dekorasi kantor",
+    user: "Gita L.",
+    helper: "Dian P.",
+    status: "Dikerjakan",
+    budget: "Rp 350.000",
+    date: "8 Jun 2025",
+  },
+  {
+    id: "TSK-008",
+    title: "Belanja groceries Superindo",
+    user: "Hendra W.",
+    helper: null,
+    status: "Menunggu",
+    budget: "Rp 450.000",
+    date: "8 Jun 2025",
+  },
+  {
+    id: "TSK-009",
+    title: "Bayar tagihan PLN di Alfamart",
+    user: "Andini P.",
+    helper: "Siti N.",
+    status: "Selesai",
+    budget: "Rp 40.000",
+    date: "7 Jun 2025",
+  },
+  {
+    id: "TSK-010",
+    title: "Daftar antrian BPJS Kesehatan",
+    user: "Budi S.",
+    helper: null,
+    status: "Dibatalkan",
+    budget: "Rp 90.000",
+    date: "7 Jun 2025",
+  },
 ];
 
 const statusConfig: Record<TaskStatus, string> = {
@@ -77,7 +159,11 @@ function AdminTasksPage() {
                 <Package className="h-4 w-4 text-muted-foreground" />
               </div>
               <p className="mt-2 text-3xl font-bold">{count}</p>
-              <span className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${statusConfig[s]}`}>{s}</span>
+              <span
+                className={`mt-1 inline-block rounded-full px-2 py-0.5 text-xs font-semibold ${statusConfig[s]}`}
+              >
+                {s}
+              </span>
             </div>
           );
         })}
@@ -123,7 +209,9 @@ function AdminTasksPage() {
                   </td>
                   <td className="px-5 py-3 text-muted-foreground">{task.user}</td>
                   <td className="px-5 py-3 text-muted-foreground">
-                    {task.helper ?? <span className="italic text-muted-foreground/60">Belum ada</span>}
+                    {task.helper ?? (
+                      <span className="italic text-muted-foreground/60">Belum ada</span>
+                    )}
                   </td>
                   <td className="px-5 py-3">
                     <StatusBadge status={task.status} />

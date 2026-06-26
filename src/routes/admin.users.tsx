@@ -5,6 +5,7 @@ import {
   Users,
   UserCheck,
   ListChecks,
+  LayoutTemplate,
   Search,
   Ban,
   Eye,
@@ -15,6 +16,7 @@ const adminNavItems = [
   { to: "/admin/users", label: "Pengguna", icon: Users },
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
+  { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
 ];
 
 export const Route = createFileRoute("/admin/users")({
@@ -34,14 +36,70 @@ interface DummyUser {
 }
 
 const dummyUsers: DummyUser[] = [
-  { id: 1, nama: "Andini Pratiwi", email: "andini@example.com", phone: "0812-3456-7890", joined: "2 Jan 2025", status: "Aktif" },
-  { id: 2, nama: "Budi Santoso", email: "budi@example.com", phone: "0821-9876-5432", joined: "15 Jan 2025", status: "Aktif" },
-  { id: 3, nama: "Citra Rahma", email: "citra@example.com", phone: "0857-1234-5678", joined: "20 Feb 2025", status: "Aktif" },
-  { id: 4, nama: "Dimas Hendra", email: "dimas@example.com", phone: "0813-5555-6666", joined: "3 Mar 2025", status: "Suspended" },
-  { id: 5, nama: "Eka Wulandari", email: "eka@example.com", phone: "0878-2222-3333", joined: "10 Mar 2025", status: "Aktif" },
-  { id: 6, nama: "Fajar Nugroho", email: "fajar@example.com", phone: "0819-7777-8888", joined: "22 Mar 2025", status: "Aktif" },
-  { id: 7, nama: "Gita Larasati", email: "gita@example.com", phone: "0822-4444-9999", joined: "5 Apr 2025", status: "Suspended" },
-  { id: 8, nama: "Hendra Wijaya", email: "hendra@example.com", phone: "0856-0000-1111", joined: "18 Apr 2025", status: "Aktif" },
+  {
+    id: 1,
+    nama: "Andini Pratiwi",
+    email: "andini@example.com",
+    phone: "0812-3456-7890",
+    joined: "2 Jan 2025",
+    status: "Aktif",
+  },
+  {
+    id: 2,
+    nama: "Budi Santoso",
+    email: "budi@example.com",
+    phone: "0821-9876-5432",
+    joined: "15 Jan 2025",
+    status: "Aktif",
+  },
+  {
+    id: 3,
+    nama: "Citra Rahma",
+    email: "citra@example.com",
+    phone: "0857-1234-5678",
+    joined: "20 Feb 2025",
+    status: "Aktif",
+  },
+  {
+    id: 4,
+    nama: "Dimas Hendra",
+    email: "dimas@example.com",
+    phone: "0813-5555-6666",
+    joined: "3 Mar 2025",
+    status: "Suspended",
+  },
+  {
+    id: 5,
+    nama: "Eka Wulandari",
+    email: "eka@example.com",
+    phone: "0878-2222-3333",
+    joined: "10 Mar 2025",
+    status: "Aktif",
+  },
+  {
+    id: 6,
+    nama: "Fajar Nugroho",
+    email: "fajar@example.com",
+    phone: "0819-7777-8888",
+    joined: "22 Mar 2025",
+    status: "Aktif",
+  },
+  {
+    id: 7,
+    nama: "Gita Larasati",
+    email: "gita@example.com",
+    phone: "0822-4444-9999",
+    joined: "5 Apr 2025",
+    status: "Suspended",
+  },
+  {
+    id: 8,
+    nama: "Hendra Wijaya",
+    email: "hendra@example.com",
+    phone: "0856-0000-1111",
+    joined: "18 Apr 2025",
+    status: "Aktif",
+  },
 ];
 
 function StatusBadge({ status }: { status: UserStatus }) {
@@ -81,7 +139,9 @@ function AdminUsersPage() {
                 <th className="px-5 py-3 text-left font-semibold text-muted-foreground">Nama</th>
                 <th className="px-5 py-3 text-left font-semibold text-muted-foreground">Email</th>
                 <th className="px-5 py-3 text-left font-semibold text-muted-foreground">No. HP</th>
-                <th className="px-5 py-3 text-left font-semibold text-muted-foreground">Bergabung</th>
+                <th className="px-5 py-3 text-left font-semibold text-muted-foreground">
+                  Bergabung
+                </th>
                 <th className="px-5 py-3 text-left font-semibold text-muted-foreground">Status</th>
                 <th className="px-5 py-3 text-right font-semibold text-muted-foreground">Aksi</th>
               </tr>

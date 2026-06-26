@@ -1,12 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/site/DashboardShell";
-import { LayoutDashboard, Users, UserCheck, ListChecks } from "lucide-react";
+import { LayoutDashboard, Users, UserCheck, ListChecks, LayoutTemplate } from "lucide-react";
 
 const navItems = [
   { to: "/admin", label: "Ringkasan", icon: LayoutDashboard },
   { to: "/admin/users", label: "Pengguna", icon: Users },
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
+  { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
 ];
 
 export const Route = createFileRoute("/admin")({

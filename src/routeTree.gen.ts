@@ -9,9 +9,12 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as RegisterRouteImport } from './routes/register'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as HelperRouteImport } from './routes/helper'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as DashboardIndexRouteImport } from './routes/dashboard.index'
@@ -19,16 +22,24 @@ import { Route as DashboardProfileRouteImport } from './routes/dashboard.profile
 import { Route as DashboardNewRouteImport } from './routes/dashboard.new'
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
-import { Route as AdminHelpersRouteImport } from './routes/admin.helpers'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
-import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
-import { Route as TermsRouteImport } from './routes/terms'
-import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as AdminLandingRouteImport } from './routes/admin.landing'
+import { Route as AdminHelpersRouteImport } from './routes/admin.helpers'
 import { Route as DashboardRequestIdRouteImport } from './routes/dashboard.request.$id'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegisterRoute = RegisterRouteImport.update({
   id: '/register',
   path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginRoute = LoginRouteImport.update({
@@ -39,6 +50,11 @@ const LoginRoute = LoginRouteImport.update({
 const HelperRoute = HelperRouteImport.update({
   id: '/helper',
   path: '/helper',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRoute = AdminRouteImport.update({
@@ -72,34 +88,24 @@ const DashboardHistoryRoute = DashboardHistoryRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminUsersRoute = AdminUsersRouteImport.update({
-  id: '/admin/users',
-  path: '/admin/users',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AdminHelpersRoute = AdminHelpersRouteImport.update({
-  id: '/admin/helpers',
-  path: '/admin/helpers',
-  getParentRoute: () => rootRouteImport,
+  id: '/users',
+  path: '/users',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AdminTasksRoute = AdminTasksRouteImport.update({
-  id: '/admin/tasks',
-  path: '/admin/tasks',
-  getParentRoute: () => rootRouteImport,
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AdminRoute,
 } as any)
-const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
+const AdminLandingRoute = AdminLandingRouteImport.update({
+  id: '/landing',
+  path: '/landing',
+  getParentRoute: () => AdminRoute,
 } as any)
-const TermsRoute = TermsRouteImport.update({
-  id: '/terms',
-  path: '/terms',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PrivacyRoute = PrivacyRouteImport.update({
-  id: '/privacy',
-  path: '/privacy',
-  getParentRoute: () => rootRouteImport,
+const AdminHelpersRoute = AdminHelpersRouteImport.update({
+  id: '/helpers',
+  path: '/helpers',
+  getParentRoute: () => AdminRoute,
 } as any)
 const DashboardRequestIdRoute = DashboardRequestIdRouteImport.update({
   id: '/dashboard/request/$id',
@@ -109,57 +115,60 @@ const DashboardRequestIdRoute = DashboardRequestIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/helper': typeof HelperRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
+  '/admin/helpers': typeof AdminHelpersRoute
+  '/admin/landing': typeof AdminLandingRoute
+  '/admin/tasks': typeof AdminTasksRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/dashboard/new': typeof DashboardNewRoute
   '/dashboard/profile': typeof DashboardProfileRoute
   '/dashboard/': typeof DashboardIndexRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/admin/helpers': typeof AdminHelpersRoute
-  '/admin/tasks': typeof AdminTasksRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/terms': typeof TermsRoute
-  '/privacy': typeof PrivacyRoute
   '/dashboard/request/$id': typeof DashboardRequestIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/helper': typeof HelperRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
+  '/admin/helpers': typeof AdminHelpersRoute
+  '/admin/landing': typeof AdminLandingRoute
+  '/admin/tasks': typeof AdminTasksRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/dashboard/new': typeof DashboardNewRoute
   '/dashboard/profile': typeof DashboardProfileRoute
   '/dashboard': typeof DashboardIndexRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/admin/helpers': typeof AdminHelpersRoute
-  '/admin/tasks': typeof AdminTasksRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/terms': typeof TermsRoute
-  '/privacy': typeof PrivacyRoute
   '/dashboard/request/$id': typeof DashboardRequestIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/admin': typeof AdminRoute
+  '/admin': typeof AdminRouteWithChildren
+  '/forgot-password': typeof ForgotPasswordRoute
   '/helper': typeof HelperRoute
   '/login': typeof LoginRoute
+  '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
+  '/terms': typeof TermsRoute
+  '/admin/helpers': typeof AdminHelpersRoute
+  '/admin/landing': typeof AdminLandingRoute
+  '/admin/tasks': typeof AdminTasksRoute
+  '/admin/users': typeof AdminUsersRoute
   '/dashboard/history': typeof DashboardHistoryRoute
   '/dashboard/new': typeof DashboardNewRoute
   '/dashboard/profile': typeof DashboardProfileRoute
   '/dashboard/': typeof DashboardIndexRoute
-  '/admin/users': typeof AdminUsersRoute
-  '/admin/helpers': typeof AdminHelpersRoute
-  '/admin/tasks': typeof AdminTasksRoute
-  '/forgot-password': typeof ForgotPasswordRoute
-  '/terms': typeof TermsRoute
-  '/privacy': typeof PrivacyRoute
   '/dashboard/request/$id': typeof DashboardRequestIdRoute
 }
 export interface FileRouteTypes {
@@ -167,84 +176,98 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/admin'
+    | '/forgot-password'
     | '/helper'
     | '/login'
+    | '/privacy'
     | '/register'
+    | '/terms'
+    | '/admin/helpers'
+    | '/admin/landing'
+    | '/admin/tasks'
+    | '/admin/users'
     | '/dashboard/history'
     | '/dashboard/new'
     | '/dashboard/profile'
     | '/dashboard/'
-    | '/admin/users'
-    | '/admin/helpers'
-    | '/admin/tasks'
-    | '/forgot-password'
-    | '/terms'
-    | '/privacy'
     | '/dashboard/request/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/admin'
+    | '/forgot-password'
     | '/helper'
     | '/login'
+    | '/privacy'
     | '/register'
+    | '/terms'
+    | '/admin/helpers'
+    | '/admin/landing'
+    | '/admin/tasks'
+    | '/admin/users'
     | '/dashboard/history'
     | '/dashboard/new'
     | '/dashboard/profile'
     | '/dashboard'
-    | '/admin/users'
-    | '/admin/helpers'
-    | '/admin/tasks'
-    | '/forgot-password'
-    | '/terms'
-    | '/privacy'
     | '/dashboard/request/$id'
   id:
     | '__root__'
     | '/'
     | '/admin'
+    | '/forgot-password'
     | '/helper'
     | '/login'
+    | '/privacy'
     | '/register'
+    | '/terms'
+    | '/admin/helpers'
+    | '/admin/landing'
+    | '/admin/tasks'
+    | '/admin/users'
     | '/dashboard/history'
     | '/dashboard/new'
     | '/dashboard/profile'
     | '/dashboard/'
-    | '/admin/users'
-    | '/admin/helpers'
-    | '/admin/tasks'
-    | '/forgot-password'
-    | '/terms'
-    | '/privacy'
     | '/dashboard/request/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AdminRoute: typeof AdminRoute
+  AdminRoute: typeof AdminRouteWithChildren
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   HelperRoute: typeof HelperRoute
   LoginRoute: typeof LoginRoute
+  PrivacyRoute: typeof PrivacyRoute
   RegisterRoute: typeof RegisterRoute
+  TermsRoute: typeof TermsRoute
   DashboardHistoryRoute: typeof DashboardHistoryRoute
   DashboardNewRoute: typeof DashboardNewRoute
   DashboardProfileRoute: typeof DashboardProfileRoute
   DashboardIndexRoute: typeof DashboardIndexRoute
-  AdminUsersRoute: typeof AdminUsersRoute
-  AdminHelpersRoute: typeof AdminHelpersRoute
-  AdminTasksRoute: typeof AdminTasksRoute
-  ForgotPasswordRoute: typeof ForgotPasswordRoute
-  TermsRoute: typeof TermsRoute
-  PrivacyRoute: typeof PrivacyRoute
   DashboardRequestIdRoute: typeof DashboardRequestIdRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/register': {
       id: '/register'
       path: '/register'
       fullPath: '/register'
       preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login': {
@@ -259,6 +282,13 @@ declare module '@tanstack/react-router' {
       path: '/helper'
       fullPath: '/helper'
       preLoaderRoute: typeof HelperRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/admin': {
@@ -305,45 +335,31 @@ declare module '@tanstack/react-router' {
     }
     '/admin/users': {
       id: '/admin/users'
-      path: '/admin/users'
+      path: '/users'
       fullPath: '/admin/users'
       preLoaderRoute: typeof AdminUsersRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/admin/helpers': {
-      id: '/admin/helpers'
-      path: '/admin/helpers'
-      fullPath: '/admin/helpers'
-      preLoaderRoute: typeof AdminHelpersRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/admin/tasks': {
       id: '/admin/tasks'
-      path: '/admin/tasks'
+      path: '/tasks'
       fullPath: '/admin/tasks'
       preLoaderRoute: typeof AdminTasksRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/forgot-password': {
-      id: '/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof ForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/landing': {
+      id: '/admin/landing'
+      path: '/landing'
+      fullPath: '/admin/landing'
+      preLoaderRoute: typeof AdminLandingRouteImport
+      parentRoute: typeof AdminRoute
     }
-    '/terms': {
-      id: '/terms'
-      path: '/terms'
-      fullPath: '/terms'
-      preLoaderRoute: typeof TermsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/privacy': {
-      id: '/privacy'
-      path: '/privacy'
-      fullPath: '/privacy'
-      preLoaderRoute: typeof PrivacyRouteImport
-      parentRoute: typeof rootRouteImport
+    '/admin/helpers': {
+      id: '/admin/helpers'
+      path: '/helpers'
+      fullPath: '/admin/helpers'
+      preLoaderRoute: typeof AdminHelpersRouteImport
+      parentRoute: typeof AdminRoute
     }
     '/dashboard/request/$id': {
       id: '/dashboard/request/$id'
@@ -355,22 +371,35 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteChildren {
+  AdminHelpersRoute: typeof AdminHelpersRoute
+  AdminLandingRoute: typeof AdminLandingRoute
+  AdminTasksRoute: typeof AdminTasksRoute
+  AdminUsersRoute: typeof AdminUsersRoute
+}
+
+const AdminRouteChildren: AdminRouteChildren = {
+  AdminHelpersRoute: AdminHelpersRoute,
+  AdminLandingRoute: AdminLandingRoute,
+  AdminTasksRoute: AdminTasksRoute,
+  AdminUsersRoute: AdminUsersRoute,
+}
+
+const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AdminRoute: AdminRoute,
+  AdminRoute: AdminRouteWithChildren,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   HelperRoute: HelperRoute,
   LoginRoute: LoginRoute,
+  PrivacyRoute: PrivacyRoute,
   RegisterRoute: RegisterRoute,
+  TermsRoute: TermsRoute,
   DashboardHistoryRoute: DashboardHistoryRoute,
   DashboardNewRoute: DashboardNewRoute,
   DashboardProfileRoute: DashboardProfileRoute,
   DashboardIndexRoute: DashboardIndexRoute,
-  AdminUsersRoute: AdminUsersRoute,
-  AdminHelpersRoute: AdminHelpersRoute,
-  AdminTasksRoute: AdminTasksRoute,
-  ForgotPasswordRoute: ForgotPasswordRoute,
-  TermsRoute: TermsRoute,
-  PrivacyRoute: PrivacyRoute,
   DashboardRequestIdRoute: DashboardRequestIdRoute,
 }
 export const routeTree = rootRouteImport
