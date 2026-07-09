@@ -13,17 +13,17 @@ import { getLandingContent } from "@/lib/api/landing.functions";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Suruhin — Suruh Apa Saja, Kami yang Bantu" },
+      { title: "Suruhin — Teman Pendamping On-Demand yang Selalu Ada" },
       {
         name: "description",
         content:
-          "Platform personal assistant on-demand untuk membantu kebutuhan harianmu dengan cepat, aman, dan praktis.",
+          "Butuh teman menemani sidang skripsi, pulang malam, atau menemani ke rumah sakit? Suruhin menghubungkanmu dengan pendamping terverifikasi agar kamu tak pernah sendirian.",
       },
-      { property: "og:title", content: "Suruhin — Asisten Pribadi On-Demand" },
+      { property: "og:title", content: "Suruhin — Teman Pendamping On-Demand" },
       {
         property: "og:description",
         content:
-          "Suruh apa saja — belanja, antar barang, antri layanan, urus dokumen. Helper terpercaya siap bantu.",
+          "Temani sidang skripsi, pulang malam aman dari klitih, atau menemani aktivitas harianmu. Pendamping terpercaya siap menemani.",
       },
     ],
   }),

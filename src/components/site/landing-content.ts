@@ -94,85 +94,85 @@ export interface LandingContent {
 
 export const defaultLandingContent: LandingContent = {
   hero: {
-    badge: "Asisten Pribadi On-Demand",
-    title: "Suruh Apa Saja,",
-    titleHighlight: "Kami yang Bantu.",
+    badge: "Teman Pendamping On-Demand",
+    title: "Tak Perlu Sendiri,",
+    titleHighlight: "Ada yang Menemani.",
     subtitle:
-      "Platform personal assistant on-demand untuk membantu kebutuhan harianmu dengan cepat, aman, dan praktis.",
-    primaryCta: "Buat Permintaan",
+      "Suruhin menghadirkan teman pendamping terpercaya untuk momen yang bikin deg-degan — dari sidang skripsi hingga pulang malam yang aman dari klitih.",
+    primaryCta: "Cari Pendamping",
     primaryCtaHref: "/dashboard/new",
     secondaryCta: "Pelajari Lebih Lanjut",
     secondaryCtaHref: "#how",
     stats: [
-      { value: "10K+", label: "Pengguna Aktif" },
-      { value: "5K+", label: "Helper Terpercaya" },
+      { value: "8K+", label: "Ditemani dengan Aman" },
+      { value: "3K+", label: "Pendamping Terverifikasi" },
       { value: "4.9★", label: "Rating Rata-rata" },
     ],
   },
   features: {
     heading: {
-      eyebrow: "Fitur",
-      title: "Semua yang kamu butuhkan dalam satu aplikasi",
-      subtitle: "Fitur canggih yang dirancang untuk mempermudah kehidupan sehari-harimu.",
+      eyebrow: "Layanan",
+      title: "Pendamping untuk setiap momen penting",
+      subtitle: "Pilih jenis pendampingan sesuai kebutuhanmu — kami siap menemani.",
     },
     items: [
       {
-        icon: "ClipboardList",
-        title: "Permintaan Kustom",
-        desc: "Buat tugas apa pun yang kamu butuhkan — dari belanja kebutuhan hingga antri layanan.",
+        icon: "Presentation",
+        title: "Temani Sidang Skripsi",
+        desc: "Ditemani hingga ruang sidang agar lebih tenang, percaya diri, dan tidak sendirian menghadapi penguji.",
       },
       {
-        icon: "Zap",
-        title: "Respon Cepat",
-        desc: "Helper merespons dalam hitungan menit sehingga tugasmu langsung dikerjakan.",
+        icon: "Moon",
+        title: "Antar Pulang Malam",
+        desc: "Pendamping menemani perjalananmu di malam hari agar aman dari klitih dan gangguan lain.",
       },
       {
-        icon: "ShieldCheck",
-        title: "Helper Terpercaya",
-        desc: "Setiap helper telah terverifikasi dan dinilai oleh komunitas.",
+        icon: "HeartHandshake",
+        title: "Teman Curhat & Menemani",
+        desc: "Butuh teman ngobrol atau sekadar ditemani beraktivitas? Ada pendamping yang siap mendengar.",
       },
       {
         icon: "MapPin",
-        title: "Lacak Langsung",
-        desc: "Pantau perkembangan helper secara langsung di peta.",
+        title: "Lacak Perjalanan Langsung",
+        desc: "Bagikan lokasi secara langsung ke orang terdekat selama kamu didampingi.",
       },
       {
-        icon: "MessageCircle",
-        title: "Chat Langsung",
-        desc: "Chat bawaan untuk berkoordinasi langsung dengan helper.",
+        icon: "Siren",
+        title: "Tombol Darurat",
+        desc: "Satu ketukan untuk mengirim sinyal darurat ke kontak pentingmu bila terjadi sesuatu.",
       },
       {
-        icon: "Star",
-        title: "Rating & Ulasan",
-        desc: "Beri nilai setiap tugas dan bantu jaga kualitas layanan terbaik.",
+        icon: "BadgeCheck",
+        title: "Pendamping Terverifikasi",
+        desc: "Setiap pendamping melewati verifikasi identitas dan dinilai oleh komunitas.",
       },
     ],
   },
   howItWorks: {
     heading: {
       eyebrow: "Cara Kerja",
-      title: "Dapatkan bantuan dalam 4 langkah mudah",
+      title: "Dapatkan pendamping dalam 4 langkah mudah",
     },
     steps: [
       {
-        icon: "FileText",
-        title: "Buat Permintaan",
-        desc: "Jelaskan apa yang kamu butuhkan — judul, lokasi, budget, dan tanggal.",
+        icon: "BookOpen",
+        title: "Ceritakan Kebutuhanmu",
+        desc: "Pilih jenis pendampingan, tentukan lokasi, waktu, dan durasi yang kamu inginkan.",
       },
       {
         icon: "UserCheck",
-        title: "Helper Menerima",
-        desc: "Helper terpercaya menerima dan mengonfirmasi tugasmu dalam hitungan menit.",
+        title: "Pendamping Menerima",
+        desc: "Pendamping terverifikasi menerima dan mengonfirmasi permintaanmu dalam hitungan menit.",
       },
       {
-        icon: "PackageCheck",
-        title: "Tugas Selesai",
-        desc: "Helper menyelesaikan tugas. Pantau progres secara langsung.",
+        icon: "Footprints",
+        title: "Ditemani dengan Aman",
+        desc: "Pendamping menemanimu selama momen berlangsung. Bagikan lokasi ke orang terdekat.",
       },
       {
         icon: "Star",
         title: "Beri Rating",
-        desc: "Beri rating untuk membantu menjaga kualitas komunitas kami.",
+        desc: "Beri rating untuk membantu menjaga kualitas dan keamanan komunitas kami.",
       },
     ],
   },
@@ -181,23 +181,23 @@ export const defaultLandingContent: LandingContent = {
       eyebrow: "Keunggulan",
       title: "Mengapa memilih Suruhin?",
       subtitle:
-        "Dirancang untuk mahasiswa, profesional, dan komunitas perkotaan yang ingin menyelesaikan lebih banyak hal tanpa stres.",
+        "Dirancang untuk mahasiswa dan warga kota yang ingin merasa aman dan tidak sendirian di momen-momen penting.",
     },
     items: [
       {
+        icon: "ShieldCheck",
+        title: "Rasa Aman Utama",
+        desc: "Setiap pendamping terverifikasi, dilengkapi pelacakan lokasi dan tombol darurat.",
+      },
+      {
+        icon: "Smile",
+        title: "Dukungan Emosional",
+        desc: "Bukan sekadar teman jalan — pendamping yang siap menenangkan dan menyemangati.",
+      },
+      {
         icon: "Clock",
-        title: "Hemat Waktu",
-        desc: "Serahkan urusan dan fokus pada hal yang penting.",
-      },
-      {
-        icon: "Layers",
-        title: "Layanan Fleksibel",
-        desc: "Dari belanja hingga dokumen — semua bisa.",
-      },
-      {
-        icon: "Tag",
-        title: "Harga Transparan",
-        desc: "Ketahui biaya di awal, tanpa biaya tersembunyi.",
+        title: "Siap Kapan Saja",
+        desc: "Tersedia sepanjang hari, termasuk larut malam saat kamu paling butuh ditemani.",
       },
       {
         icon: "Lock",
@@ -209,26 +209,28 @@ export const defaultLandingContent: LandingContent = {
   testimonials: {
     heading: {
       eyebrow: "Testimoni",
-      title: "Dicintai oleh ribuan pengguna",
+      title: "Cerita mereka yang tak lagi sendiri",
     },
     items: [
       {
         name: "Andini Pratiwi",
         role: "Mahasiswa, Universitas Indonesia",
-        quote: "Suruhin nyelametin gue banget pas lagi sibuk skripsi. Helper-nya cepet dan ramah!",
+        quote:
+          "Ditemani sampai ruang sidang bikin gue jauh lebih tenang. Nggak nyangka ada layanan kayak gini!",
         initials: "AP",
       },
       {
         name: "Budi Santoso",
-        role: "Freelance Designer",
+        role: "Karyawan Shift Malam",
         quote:
-          "Praktis banget buat antrian bank dan urus dokumen. Hemat waktu, harga juga transparan.",
+          "Pulang kerja tengah malam jadi nggak was-was lagi soal klitih. Pendampingnya sigap dan bikin nyaman.",
         initials: "BS",
       },
       {
         name: "Citra Ramadhani",
-        role: "Founder, Kopiteria",
-        quote: "Suruhin jadi andalan tim kami buat errand kantor. Quality helpers, top rating!",
+        role: "Mahasiswa Perantau",
+        quote:
+          "Pas lagi down banget, ada teman yang nemenin dan dengerin. Ngerasa nggak sendirian di kota orang.",
         initials: "CR",
       },
     ],
@@ -241,31 +243,31 @@ export const defaultLandingContent: LandingContent = {
     items: [
       {
         q: "Apa itu Suruhin?",
-        a: "Suruhin adalah platform personal assistant on-demand yang menghubungkan kamu dengan helper terpercaya untuk berbagai kebutuhan harian.",
+        a: "Suruhin adalah platform teman pendamping on-demand yang menghubungkan kamu dengan pendamping terpercaya untuk momen penting — seperti sidang skripsi atau pulang malam agar tetap aman.",
       },
       {
-        q: "Bagaimana cara membuat request?",
-        a: "Daftar akun, klik 'Buat Permintaan', isi detail tugas dan budget, lalu tunggu helper menerima.",
+        q: "Bagaimana cara memesan pendamping?",
+        a: "Daftar akun, klik 'Cari Pendamping', pilih jenis pendampingan, lokasi, dan waktu, lalu tunggu pendamping menerima.",
       },
       {
-        q: "Apakah helper-nya aman dan terpercaya?",
-        a: "Semua helper kami melalui proses verifikasi identitas dan memiliki sistem rating dari komunitas.",
+        q: "Apakah pendampingnya aman dan terpercaya?",
+        a: "Semua pendamping melewati verifikasi identitas, dilengkapi pelacakan lokasi langsung, dan memiliki sistem rating dari komunitas.",
       },
       {
-        q: "Bagaimana sistem pembayaran?",
-        a: "Pembayaran dilakukan secara cashless melalui platform, dengan jaminan keamanan dan refund jika tugas tidak selesai.",
+        q: "Bagaimana keamanan saat pendampingan malam hari?",
+        a: "Kamu bisa membagikan lokasi secara langsung ke orang terdekat dan menggunakan tombol darurat kapan pun selama pendampingan berlangsung.",
       },
       {
-        q: "Apakah saya bisa jadi helper?",
-        a: "Tentu! Daftarkan diri sebagai helper, lengkapi verifikasi, dan mulai dapatkan penghasilan tambahan.",
+        q: "Apakah saya bisa menjadi pendamping?",
+        a: "Tentu! Daftarkan diri sebagai pendamping, lengkapi verifikasi, dan mulai dapatkan penghasilan sambil membantu orang lain merasa aman.",
       },
     ],
   },
   finalCta: {
-    title: "Siap mempermudah hidupmu?",
+    title: "Siap ditemani kapan pun kamu butuh?",
     subtitle:
-      "Bergabung dengan 10.000+ pengguna yang mempercayai Suruhin setiap hari untuk menyelesaikan tugas.",
-    cta: "Mulai Gunakan Suruhin",
+      "Bergabung dengan ribuan orang yang mempercayai Suruhin untuk merasa aman dan tidak sendirian di momen penting.",
+    cta: "Mulai Cari Pendamping",
     ctaHref: "/register",
   },
 };
