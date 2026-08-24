@@ -9,7 +9,7 @@
     "build:azure": "cross-env NITRO_PRESET=node-server vite build",
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
-    "start": "node .output/server/index.mjs",
+    "start": "node server-wrapper.mjs",
     "lint": "eslint .",
     "format": "prettier --write ."
   },
