@@ -16,7 +16,7 @@ export function Benefits({
   items = defaultLandingContent.benefits.items,
 }: BenefitsProps) {
   return (
-    <section className="py-20 lg:py-28">
+    <section id="benefits" className="py-20 lg:py-28" data-analytics-section="benefits">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="grid items-center gap-12 lg:grid-cols-2">
           <div>

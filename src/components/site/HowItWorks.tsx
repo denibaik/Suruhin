@@ -11,7 +11,7 @@ export function HowItWorks({
   steps = defaultLandingContent.howItWorks.steps,
 }: HowItWorksProps) {
   return (
-    <section id="how" className="bg-muted/40 py-20 lg:py-28">
+    <section id="how" className="bg-muted/40 py-20 lg:py-28" data-analytics-section="how_it_works">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">

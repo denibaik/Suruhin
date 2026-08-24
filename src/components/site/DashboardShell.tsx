@@ -3,6 +3,7 @@ import { Link, useLocation } from "@tanstack/react-router";
 import { Logo } from "./Logo";
 import { Bell, LogOut } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { logoutAdmin } from "@/lib/api/admin-auth.functions";
 
 export interface NavItem {
   to: string;
@@ -22,6 +23,7 @@ export function DashboardShell({
   userInitials?: string;
 }) {
   const location = useLocation();
+  const isAdmin = location.pathname.startsWith("/admin");
   return (
     <div className="min-h-screen bg-muted/30">
       <aside className="fixed inset-y-0 left-0 hidden w-64 flex-col border-r border-border bg-card lg:flex">
@@ -43,12 +45,25 @@ export function DashboardShell({
           })}
         </nav>
         <div className="border-t border-border p-4">
-          <Link
-            to="/"
-            className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
-          >
-            <LogOut className="h-4 w-4" /> Keluar
-          </Link>
+          {isAdmin ? (
+            <button
+              type="button"
+              onClick={async () => {
+                await logoutAdmin();
+                window.location.href = "/admin/login";
+              }}
+              className="flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
+            >
+              <LogOut className="h-4 w-4" /> Keluar Admin
+            </button>
+          ) : (
+            <Link
+              to="/"
+              className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-muted"
+            >
+              <LogOut className="h-4 w-4" /> Keluar
+            </Link>
+          )}
         </div>
       </aside>
       <div className="lg:pl-64">
@@ -64,14 +79,14 @@ export function DashboardShell({
           </div>
         </header>
         <main className="p-4 lg:p-8">{children}</main>
-        <nav className="fixed inset-x-0 bottom-0 z-40 flex border-t border-border bg-card lg:hidden">
-          {items.slice(0, 4).map((item) => {
+        <nav className="fixed inset-x-0 bottom-0 z-40 flex overflow-x-auto border-t border-border bg-card lg:hidden">
+          {items.map((item) => {
             const active = location.pathname === item.to;
             return (
               <Link
                 key={item.label}
                 to={item.to}
-                className={`flex flex-1 flex-col items-center gap-1 py-2 text-xs ${active ? "text-primary" : "text-muted-foreground"}`}
+                className={`flex min-w-20 flex-1 flex-col items-center gap-1 py-2 text-xs ${active ? "text-primary" : "text-muted-foreground"}`}
               >
                 <item.icon className="h-5 w-5" /> {item.label}
               </Link>

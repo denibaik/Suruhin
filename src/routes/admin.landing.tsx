@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, redirect, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
   LayoutDashboard,
@@ -12,17 +12,23 @@ import {
   Plus,
   Trash2,
   Eye,
+  Upload,
+  EyeOff,
+  BarChart3,
 } from "lucide-react";
 import { DashboardShell } from "@/components/site/DashboardShell";
+import { LandingPreview } from "@/components/admin/LandingPreview";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
-  getLandingContent,
+  getLandingEditor,
+  publishLandingContent,
   resetLandingContent,
   saveLandingContent,
+  unpublishLandingContent,
 } from "@/lib/api/landing.functions";
 import {
   defaultLandingContent,
@@ -36,6 +42,7 @@ import {
   type SectionHeading,
 } from "@/components/site/landing-content";
 import { landingIconNames } from "@/components/site/landing-icons";
+import { getAdminStatus } from "@/lib/api/admin-auth.functions";
 
 const adminNavItems = [
   { to: "/admin", label: "Ringkasan", icon: LayoutDashboard },
@@ -43,18 +50,27 @@ const adminNavItems = [
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
   { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 export const Route = createFileRoute("/admin/landing")({
+  beforeLoad: async () => {
+    const admin = await getAdminStatus();
+    if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
+  },
   head: () => ({ meta: [{ title: "Landing Page — Admin Suruhin" }] }),
-  loader: async () => getLandingContent(),
+  loader: async () => getLandingEditor(),
   component: AdminLandingPage,
 });
 
 function AdminLandingPage() {
+  const router = useRouter();
   const initial = Route.useLoaderData();
-  const [content, setContent] = useState<LandingContent>(initial);
+  const [content, setContent] = useState<LandingContent>(initial.document.content);
+  const [document, setDocument] = useState(initial.document);
+  const [revisions, setRevisions] = useState(initial.revisions);
   const [saving, setSaving] = useState(false);
+  const [showPreview, setShowPreview] = useState(true);
 
   const updateHero = (patch: Partial<LandingContent["hero"]>) =>
     setContent((c) => ({ ...c, hero: { ...c.hero, ...patch } }));
@@ -65,8 +81,10 @@ function AdminLandingPage() {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await saveLandingContent({ data: content });
-      toast.success("Konten landing page berhasil disimpan.");
+      const saved = await saveLandingContent({ data: content });
+      setDocument(saved);
+      setRevisions((items) => [saved, ...items].slice(0, 10));
+      toast.success("Draft landing page berhasil disimpan.");
     } catch (err) {
       console.error(err);
       toast.error("Gagal menyimpan. Periksa input lalu coba lagi.");
@@ -75,11 +93,41 @@ function AdminLandingPage() {
     }
   };
 
+  const handlePublish = async () => {
+    setSaving(true);
+    try {
+      const published = await publishLandingContent({ data: content });
+      setDocument(published);
+      setRevisions((items) => [published, ...items].slice(0, 10));
+      await router.invalidate();
+      toast.success("Landing page berhasil dipublish.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Publish gagal. Pastikan database dan session admin aktif.");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const handleUnpublish = async () => {
+    try {
+      const result = await unpublishLandingContent();
+      setDocument(result);
+      await router.invalidate();
+      toast.message("Landing page di-unpublish.");
+    } catch (error) {
+      console.error(error);
+      toast.error("Gagal melakukan unpublish.");
+    }
+  };
+
   const handleReset = async () => {
     try {
-      await resetLandingContent();
+      const reset = await resetLandingContent();
       const fresh = structuredClone(defaultLandingContent);
       setContent(fresh);
+      setDocument(reset);
+      await router.invalidate();
       toast.message("Konten dikembalikan ke default.");
     } catch (err) {
       console.error(err);
@@ -91,29 +139,55 @@ function AdminLandingPage() {
     <DashboardShell items={adminNavItems} title="Edit Landing Page">
       {/* Action bar */}
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <p className="text-sm text-muted-foreground">
-          Ubah teks, item, dan CTA pada landing page publik. Perubahan langsung tampil setelah
-          disimpan.
-        </p>
+        <div>
+          <p className="text-sm text-muted-foreground">
+            Edit konten sebagai draft, periksa live preview, lalu publish jika sudah siap.
+          </p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Status: <strong className="text-foreground">{document.status}</strong> · Versi{" "}
+            {document.version} · Terakhir diubah{" "}
+            {new Date(document.updatedAt).toLocaleString("id-ID")}
+          </p>
+        </div>
         <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={() => setShowPreview((value) => !value)}>
+            <Eye className="h-4 w-4" /> {showPreview ? "Tutup Preview" : "Preview"}
+          </Button>
           <Button variant="outline" size="sm" onClick={handleReset}>
             <RotateCcw className="h-4 w-4" /> Reset Default
           </Button>
-          <Button variant="hero" size="sm" onClick={handleSave} disabled={saving}>
-            <Save className="h-4 w-4" /> {saving ? "Menyimpan..." : "Simpan"}
+          {document.status === "published" && (
+            <Button variant="outline" size="sm" onClick={handleUnpublish}>
+              <EyeOff className="h-4 w-4" /> Unpublish
+            </Button>
+          )}
+          <Button variant="outline" size="sm" onClick={handleSave} disabled={saving}>
+            <Save className="h-4 w-4" /> {saving ? "Menyimpan..." : "Simpan Draft"}
+          </Button>
+          <Button variant="hero" size="sm" onClick={handlePublish} disabled={saving}>
+            <Upload className="h-4 w-4" /> Publish
           </Button>
         </div>
       </div>
 
+      {showPreview && (
+        <div className="mt-6">
+          <LandingPreview content={content} />
+        </div>
+      )}
+
       <Tabs defaultValue="hero" className="mt-6">
         <TabsList className="flex w-full flex-wrap justify-start h-auto gap-1 p-1">
           <TabsTrigger value="hero">Hero</TabsTrigger>
+          <TabsTrigger value="about">About</TabsTrigger>
           <TabsTrigger value="features">Fitur</TabsTrigger>
           <TabsTrigger value="how">Cara Kerja</TabsTrigger>
           <TabsTrigger value="benefits">Keunggulan</TabsTrigger>
           <TabsTrigger value="testimonials">Testimoni</TabsTrigger>
           <TabsTrigger value="faq">FAQ</TabsTrigger>
           <TabsTrigger value="cta">CTA Akhir</TabsTrigger>
+          <TabsTrigger value="footer">Footer</TabsTrigger>
+          <TabsTrigger value="design">Desain</TabsTrigger>
         </TabsList>
 
         {/* HERO */}
@@ -123,6 +197,14 @@ function AdminLandingPage() {
               <Input
                 value={content.hero.badge}
                 onChange={(e) => updateHero({ badge: e.target.value })}
+              />
+            </Field>
+            <Field label="Hero image URL (HTTPS)">
+              <Input
+                type="url"
+                placeholder="https://..."
+                value={content.hero.imageUrl}
+                onChange={(e) => updateHero({ imageUrl: e.target.value })}
               />
             </Field>
             <div className="grid gap-4 sm:grid-cols-2">
@@ -191,6 +273,48 @@ function AdminLandingPage() {
                 </div>
               )}
             />
+          </SectionCard>
+        </TabsContent>
+
+        {/* ABOUT */}
+        <TabsContent value="about">
+          <SectionCard>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Eyebrow">
+                <Input
+                  value={content.about.eyebrow}
+                  onChange={(e) =>
+                    setContent((c) => ({ ...c, about: { ...c.about, eyebrow: e.target.value } }))
+                  }
+                />
+              </Field>
+              <Field label="Judul">
+                <Input
+                  value={content.about.title}
+                  onChange={(e) =>
+                    setContent((c) => ({ ...c, about: { ...c.about, title: e.target.value } }))
+                  }
+                />
+              </Field>
+            </div>
+            <Field label="Deskripsi">
+              <Textarea
+                rows={4}
+                value={content.about.description}
+                onChange={(e) =>
+                  setContent((c) => ({ ...c, about: { ...c.about, description: e.target.value } }))
+                }
+              />
+            </Field>
+            <Field label="Image URL (HTTPS)">
+              <Input
+                type="url"
+                value={content.about.imageUrl}
+                onChange={(e) =>
+                  setContent((c) => ({ ...c, about: { ...c.about, imageUrl: e.target.value } }))
+                }
+              />
+            </Field>
           </SectionCard>
         </TabsContent>
 
@@ -422,7 +546,186 @@ function AdminLandingPage() {
             </div>
           </SectionCard>
         </TabsContent>
+
+        <TabsContent value="footer">
+          <SectionCard>
+            <Field label="Deskripsi">
+              <Textarea
+                rows={3}
+                value={content.footer.description}
+                onChange={(e) =>
+                  setContent((c) => ({
+                    ...c,
+                    footer: { ...c.footer, description: e.target.value },
+                  }))
+                }
+              />
+            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field label="Email">
+                <Input
+                  type="email"
+                  value={content.footer.email}
+                  onChange={(e) =>
+                    setContent((c) => ({ ...c, footer: { ...c.footer, email: e.target.value } }))
+                  }
+                />
+              </Field>
+              <Field label="Telepon">
+                <Input
+                  value={content.footer.phone}
+                  onChange={(e) =>
+                    setContent((c) => ({ ...c, footer: { ...c.footer, phone: e.target.value } }))
+                  }
+                />
+              </Field>
+              <Field label="Lokasi">
+                <Input
+                  value={content.footer.location}
+                  onChange={(e) =>
+                    setContent((c) => ({ ...c, footer: { ...c.footer, location: e.target.value } }))
+                  }
+                />
+              </Field>
+              <Field label="Copyright">
+                <Input
+                  value={content.footer.copyright}
+                  onChange={(e) =>
+                    setContent((c) => ({
+                      ...c,
+                      footer: { ...c.footer, copyright: e.target.value },
+                    }))
+                  }
+                />
+              </Field>
+            </div>
+            {(["facebookUrl", "instagramUrl", "twitterUrl", "linkedinUrl"] as const).map((key) => (
+              <Field key={key} label={`${key.replace("Url", "")} URL (HTTPS)`}>
+                <Input
+                  type="url"
+                  value={content.footer[key]}
+                  onChange={(e) =>
+                    setContent((c) => ({ ...c, footer: { ...c.footer, [key]: e.target.value } }))
+                  }
+                />
+              </Field>
+            ))}
+          </SectionCard>
+        </TabsContent>
+
+        <TabsContent value="design">
+          <SectionCard>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {(["primaryColor", "secondaryColor", "backgroundColor", "textColor"] as const).map(
+                (key) => (
+                  <Field key={key} label={key}>
+                    <div className="flex gap-2">
+                      <Input
+                        type="color"
+                        className="w-14 p-1"
+                        value={content.theme[key]}
+                        onChange={(e) =>
+                          setContent((c) => ({
+                            ...c,
+                            theme: { ...c.theme, [key]: e.target.value },
+                          }))
+                        }
+                      />
+                      <Input
+                        value={content.theme[key]}
+                        onChange={(e) =>
+                          setContent((c) => ({
+                            ...c,
+                            theme: { ...c.theme, [key]: e.target.value },
+                          }))
+                        }
+                      />
+                    </div>
+                  </Field>
+                ),
+              )}
+              <Field label="Font">
+                <select
+                  className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                  value={content.theme.fontFamily}
+                  onChange={(e) =>
+                    setContent((c) => ({
+                      ...c,
+                      theme: {
+                        ...c.theme,
+                        fontFamily: e.target.value as LandingContent["theme"]["fontFamily"],
+                      },
+                    }))
+                  }
+                >
+                  {["Inter", "Arial", "Georgia", "system-ui"].map((value) => (
+                    <option key={value}>{value}</option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="Border radius">
+                <select
+                  className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                  value={content.theme.borderRadius}
+                  onChange={(e) =>
+                    setContent((c) => ({
+                      ...c,
+                      theme: {
+                        ...c.theme,
+                        borderRadius: e.target.value as LandingContent["theme"]["borderRadius"],
+                      },
+                    }))
+                  }
+                >
+                  {["0.5rem", "0.75rem", "1rem", "1.5rem"].map((value) => (
+                    <option key={value}>{value}</option>
+                  ))}
+                </select>
+              </Field>
+              <Field label="Button style">
+                <select
+                  className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm"
+                  value={content.theme.buttonStyle}
+                  onChange={(e) =>
+                    setContent((c) => ({
+                      ...c,
+                      theme: {
+                        ...c.theme,
+                        buttonStyle: e.target.value as LandingContent["theme"]["buttonStyle"],
+                      },
+                    }))
+                  }
+                >
+                  {["solid", "soft", "outline"].map((value) => (
+                    <option key={value}>{value}</option>
+                  ))}
+                </select>
+              </Field>
+            </div>
+          </SectionCard>
+        </TabsContent>
       </Tabs>
+
+      <div className="mt-6 rounded-2xl border bg-card p-5">
+        <h3 className="font-semibold">Revision Terakhir</h3>
+        <div className="mt-3 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+          {revisions.slice(0, 6).map((revision) => (
+            <div
+              key={`${revision.version}-${revision.updatedAt}`}
+              className="rounded-xl bg-muted/50 p-3 text-xs"
+            >
+              <div className="flex justify-between">
+                <strong>Versi {revision.version}</strong>
+                <span className="capitalize text-primary">{revision.status}</span>
+              </div>
+              <p className="mt-1 text-muted-foreground">
+                {new Date(revision.updatedAt).toLocaleString("id-ID")}
+              </p>
+              <p className="text-muted-foreground">oleh {revision.updatedBy}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* Preview link */}
       <div className="mt-6 flex items-center gap-2 text-sm">

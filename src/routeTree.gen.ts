@@ -23,8 +23,10 @@ import { Route as DashboardNewRouteImport } from './routes/dashboard.new'
 import { Route as DashboardHistoryRouteImport } from './routes/dashboard.history'
 import { Route as AdminUsersRouteImport } from './routes/admin.users'
 import { Route as AdminTasksRouteImport } from './routes/admin.tasks'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminLandingRouteImport } from './routes/admin.landing'
 import { Route as AdminHelpersRouteImport } from './routes/admin.helpers'
+import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as DashboardRequestIdRouteImport } from './routes/dashboard.request.$id'
 
 const TermsRoute = TermsRouteImport.update({
@@ -97,6 +99,11 @@ const AdminTasksRoute = AdminTasksRouteImport.update({
   path: '/tasks',
   getParentRoute: () => AdminRoute,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminLandingRoute = AdminLandingRouteImport.update({
   id: '/landing',
   path: '/landing',
@@ -105,6 +112,11 @@ const AdminLandingRoute = AdminLandingRouteImport.update({
 const AdminHelpersRoute = AdminHelpersRouteImport.update({
   id: '/helpers',
   path: '/helpers',
+  getParentRoute: () => AdminRoute,
+} as any)
+const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
+  id: '/analytics',
+  path: '/analytics',
   getParentRoute: () => AdminRoute,
 } as any)
 const DashboardRequestIdRoute = DashboardRequestIdRouteImport.update({
@@ -122,8 +134,10 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/helpers': typeof AdminHelpersRoute
   '/admin/landing': typeof AdminLandingRoute
+  '/admin/login': typeof AdminLoginRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/users': typeof AdminUsersRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -141,8 +155,10 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/helpers': typeof AdminHelpersRoute
   '/admin/landing': typeof AdminLandingRoute
+  '/admin/login': typeof AdminLoginRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/users': typeof AdminUsersRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -161,8 +177,10 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/register': typeof RegisterRoute
   '/terms': typeof TermsRoute
+  '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/helpers': typeof AdminHelpersRoute
   '/admin/landing': typeof AdminLandingRoute
+  '/admin/login': typeof AdminLoginRoute
   '/admin/tasks': typeof AdminTasksRoute
   '/admin/users': typeof AdminUsersRoute
   '/dashboard/history': typeof DashboardHistoryRoute
@@ -182,8 +200,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/admin/analytics'
     | '/admin/helpers'
     | '/admin/landing'
+    | '/admin/login'
     | '/admin/tasks'
     | '/admin/users'
     | '/dashboard/history'
@@ -201,8 +221,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/admin/analytics'
     | '/admin/helpers'
     | '/admin/landing'
+    | '/admin/login'
     | '/admin/tasks'
     | '/admin/users'
     | '/dashboard/history'
@@ -220,8 +242,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/register'
     | '/terms'
+    | '/admin/analytics'
     | '/admin/helpers'
     | '/admin/landing'
+    | '/admin/login'
     | '/admin/tasks'
     | '/admin/users'
     | '/dashboard/history'
@@ -347,6 +371,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminTasksRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/landing': {
       id: '/admin/landing'
       path: '/landing'
@@ -361,6 +392,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminHelpersRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/admin/analytics': {
+      id: '/admin/analytics'
+      path: '/analytics'
+      fullPath: '/admin/analytics'
+      preLoaderRoute: typeof AdminAnalyticsRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/dashboard/request/$id': {
       id: '/dashboard/request/$id'
       path: '/dashboard/request/$id'
@@ -372,15 +410,19 @@ declare module '@tanstack/react-router' {
 }
 
 interface AdminRouteChildren {
+  AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminHelpersRoute: typeof AdminHelpersRoute
   AdminLandingRoute: typeof AdminLandingRoute
+  AdminLoginRoute: typeof AdminLoginRoute
   AdminTasksRoute: typeof AdminTasksRoute
   AdminUsersRoute: typeof AdminUsersRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
+  AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminHelpersRoute: AdminHelpersRoute,
   AdminLandingRoute: AdminLandingRoute,
+  AdminLoginRoute: AdminLoginRoute,
   AdminTasksRoute: AdminTasksRoute,
   AdminUsersRoute: AdminUsersRoute,
 }

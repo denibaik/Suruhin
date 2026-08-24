@@ -1,11 +1,13 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/site/DashboardShell";
+import { getAdminStatus } from "@/lib/api/admin-auth.functions";
 import {
   LayoutDashboard,
   Users,
   UserCheck,
   ListChecks,
   LayoutTemplate,
+  BarChart3,
   Search,
   Package,
 } from "lucide-react";
@@ -16,9 +18,14 @@ const adminNavItems = [
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
   { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 export const Route = createFileRoute("/admin/tasks")({
+  beforeLoad: async () => {
+    const admin = await getAdminStatus();
+    if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
+  },
   head: () => ({ meta: [{ title: "Tugas — Admin Suruhin" }] }),
   component: AdminTasksPage,
 });

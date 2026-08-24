@@ -20,17 +20,25 @@ export function Navbar() {
         <Logo />
         <div className="hidden items-center gap-8 md:flex">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground">
+            <a
+              key={l.href}
+              href={l.href}
+              className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+            >
               {l.label}
             </a>
           ))}
         </div>
         <div className="hidden items-center gap-3 md:flex">
           <Button asChild variant="ghost">
-            <Link to="/login">Masuk</Link>
+            <Link to="/login" data-analytics-cta="nav_login_desktop">
+              Masuk
+            </Link>
           </Button>
           <Button asChild variant="hero">
-            <Link to="/register">Mulai</Link>
+            <Link to="/register" data-analytics-cta="nav_register_desktop">
+              Mulai
+            </Link>
           </Button>
         </div>
         <button className="md:hidden" onClick={() => setOpen(!open)} aria-label="Toggle menu">
@@ -41,13 +49,26 @@ export function Navbar() {
         <div className="border-t border-border bg-background md:hidden">
           <div className="container mx-auto flex flex-col gap-4 px-4 py-4">
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-sm font-medium text-muted-foreground">
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={() => setOpen(false)}
+                className="text-sm font-medium text-muted-foreground"
+              >
                 {l.label}
               </a>
             ))}
             <div className="flex gap-2 pt-2">
-              <Button asChild variant="outline" className="flex-1"><Link to="/login">Masuk</Link></Button>
-              <Button asChild variant="hero" className="flex-1"><Link to="/register">Daftar</Link></Button>
+              <Button asChild variant="outline" className="flex-1">
+                <Link to="/login" data-analytics-cta="nav_login_mobile">
+                  Masuk
+                </Link>
+              </Button>
+              <Button asChild variant="hero" className="flex-1">
+                <Link to="/register" data-analytics-cta="nav_register_mobile">
+                  Daftar
+                </Link>
+              </Button>
             </div>
           </div>
         </div>

@@ -16,7 +16,7 @@ export function FAQ({
   items = defaultLandingContent.faq.items,
 }: FAQProps) {
   return (
-    <section className="py-20 lg:py-28">
+    <section id="faq" className="py-20 lg:py-28" data-analytics-section="faq">
       <div className="container mx-auto max-w-3xl px-4">
         <div className="text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">

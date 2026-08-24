@@ -151,6 +151,22 @@
   --sidebar-ring: oklch(0.551 0.027 264.364);
 }
 
+.landing-theme [data-analytics-cta] {
+  border-radius: var(--landing-radius);
+}
+
+.landing-theme[data-button-style="soft"] [data-analytics-cta] {
+  box-shadow: none;
+  opacity: 0.9;
+}
+
+.landing-theme[data-button-style="outline"] [data-analytics-cta] {
+  background: transparent;
+  border: 2px solid var(--landing-primary);
+  color: var(--landing-primary);
+  box-shadow: none;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -159,7 +175,9 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-feature-settings: "rlig" 1, "calt" 1;
+    font-feature-settings:
+      "rlig" 1,
+      "calt" 1;
     -webkit-font-smoothing: antialiased;
   }
 

@@ -12,6 +12,7 @@ export interface HeroStat {
 
 export interface HeroContent {
   badge: string;
+  imageUrl: string;
   title: string;
   titleHighlight: string;
   subtitle: string;
@@ -70,8 +71,38 @@ export interface FinalCtaContent {
   ctaHref: string;
 }
 
+export interface AboutContent {
+  eyebrow: string;
+  title: string;
+  description: string;
+  imageUrl: string;
+}
+
+export interface FooterContent {
+  description: string;
+  email: string;
+  phone: string;
+  location: string;
+  copyright: string;
+  facebookUrl: string;
+  instagramUrl: string;
+  twitterUrl: string;
+  linkedinUrl: string;
+}
+
+export interface LandingTheme {
+  primaryColor: string;
+  secondaryColor: string;
+  backgroundColor: string;
+  textColor: string;
+  fontFamily: "Inter" | "Arial" | "Georgia" | "system-ui";
+  borderRadius: "0.5rem" | "0.75rem" | "1rem" | "1.5rem";
+  buttonStyle: "solid" | "soft" | "outline";
+}
+
 export interface LandingContent {
   hero: HeroContent;
+  about: AboutContent;
   features: {
     heading: SectionHeading;
     items: FeatureItem[];
@@ -90,11 +121,14 @@ export interface LandingContent {
     items: FaqItem[];
   };
   finalCta: FinalCtaContent;
+  footer: FooterContent;
+  theme: LandingTheme;
 }
 
 export const defaultLandingContent: LandingContent = {
   hero: {
     badge: "Teman Pendamping On-Demand",
+    imageUrl: "",
     title: "Tak Perlu Sendiri,",
     titleHighlight: "Ada yang Menemani.",
     subtitle:
@@ -108,6 +142,13 @@ export const defaultLandingContent: LandingContent = {
       { value: "3K+", label: "Pendamping Terverifikasi" },
       { value: "4.9★", label: "Rating Rata-rata" },
     ],
+  },
+  about: {
+    eyebrow: "Tentang Suruhin",
+    title: "Teman yang hadir saat kamu membutuhkannya",
+    description:
+      "Suruhin menghubungkanmu dengan pendamping terverifikasi untuk memberi rasa aman, dukungan, dan keberanian dalam menjalani momen penting.",
+    imageUrl: "",
   },
   features: {
     heading: {
@@ -269,5 +310,26 @@ export const defaultLandingContent: LandingContent = {
       "Bergabung dengan ribuan orang yang mempercayai Suruhin untuk merasa aman dan tidak sendirian di momen penting.",
     cta: "Mulai Cari Pendamping",
     ctaHref: "/register",
+  },
+  footer: {
+    description:
+      "Platform teman pendamping on-demand untuk rasa aman dan dukungan di momen penting.",
+    email: "hello@suruhin.id",
+    phone: "+62 812 3456 7890",
+    location: "Yogyakarta, Indonesia",
+    copyright: "Suruhin. Hak cipta dilindungi undang-undang.",
+    facebookUrl: "",
+    instagramUrl: "",
+    twitterUrl: "",
+    linkedinUrl: "",
+  },
+  theme: {
+    primaryColor: "#2563eb",
+    secondaryColor: "#0f2a82",
+    backgroundColor: "#ffffff",
+    textColor: "#111827",
+    fontFamily: "Inter",
+    borderRadius: "1rem",
+    buttonStyle: "solid",
   },
 };

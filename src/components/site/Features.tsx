@@ -11,7 +11,7 @@ export function Features({
   items = defaultLandingContent.features.items,
 }: FeaturesProps) {
   return (
-    <section id="features" className="py-20 lg:py-28">
+    <section id="features" className="py-20 lg:py-28" data-analytics-section="features">
       <div className="container mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">

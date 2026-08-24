@@ -7,7 +7,11 @@ import { defaultLandingContent, type HeroContent } from "./landing-content";
 export function Hero({ content = defaultLandingContent.hero }: { content?: HeroContent }) {
   const c = content;
   return (
-    <section id="home" className="relative overflow-hidden bg-gradient-hero">
+    <section
+      id="home"
+      className="relative overflow-hidden bg-gradient-hero"
+      data-analytics-section="hero"
+    >
       <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-primary/20 blur-3xl" />
       <div className="absolute -bottom-20 -left-20 h-72 w-72 rounded-full bg-primary/10 blur-3xl" />
       <div className="container relative mx-auto grid max-w-7xl gap-12 px-4 py-20 lg:grid-cols-2 lg:py-32">
@@ -25,12 +29,14 @@ export function Hero({ content = defaultLandingContent.hero }: { content?: HeroC
           <p className="mt-6 max-w-xl text-lg text-muted-foreground">{c.subtitle}</p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild variant="hero" size="xl">
-              <Link to={c.primaryCtaHref}>
+              <Link to={c.primaryCtaHref} data-analytics-cta="hero_primary">
                 {c.primaryCta} <ArrowRight className="h-4 w-4" />
               </Link>
             </Button>
             <Button asChild variant="outlineHero" size="xl">
-              <a href={c.secondaryCtaHref}>{c.secondaryCta}</a>
+              <a href={c.secondaryCtaHref} data-analytics-cta="hero_secondary">
+                {c.secondaryCta}
+              </a>
             </Button>
           </div>
           <div className="mt-10 flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
@@ -46,7 +52,7 @@ export function Hero({ content = defaultLandingContent.hero }: { content?: HeroC
         <div className="relative flex items-center justify-center">
           <div className="absolute inset-0 bg-gradient-primary opacity-10 blur-3xl" />
           <img
-            src={heroImg}
+            src={c.imageUrl || heroImg}
             alt="Helper Suruhin membantu pelanggan dengan belanja dan pengantaran"
             width={1024}
             height={1024}

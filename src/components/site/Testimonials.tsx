@@ -15,7 +15,11 @@ export function Testimonials({
   items = defaultLandingContent.testimonials.items,
 }: TestimonialsProps) {
   return (
-    <section id="testimonials" className="bg-muted/40 py-20 lg:py-28">
+    <section
+      id="testimonials"
+      className="bg-muted/40 py-20 lg:py-28"
+      data-analytics-section="testimonials"
+    >
       <div className="container mx-auto max-w-7xl px-4">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-semibold uppercase tracking-wider text-primary">

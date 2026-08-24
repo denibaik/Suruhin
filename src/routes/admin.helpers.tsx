@@ -1,11 +1,14 @@
-import { createFileRoute } from "@tanstack/react-router";
+import type { ReactNode } from "react";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/site/DashboardShell";
+import { getAdminStatus } from "@/lib/api/admin-auth.functions";
 import {
   LayoutDashboard,
   Users,
   UserCheck,
   ListChecks,
   LayoutTemplate,
+  BarChart3,
   Search,
   Eye,
   Star,
@@ -20,9 +23,14 @@ const adminNavItems = [
   { to: "/admin/helpers", label: "Helper", icon: UserCheck },
   { to: "/admin/tasks", label: "Tugas", icon: ListChecks },
   { to: "/admin/landing", label: "Landing Page", icon: LayoutTemplate },
+  { to: "/admin/analytics", label: "Analytics", icon: BarChart3 },
 ];
 
 export const Route = createFileRoute("/admin/helpers")({
+  beforeLoad: async () => {
+    const admin = await getAdminStatus();
+    if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
+  },
   head: () => ({ meta: [{ title: "Helper — Admin Suruhin" }] }),
   component: AdminHelpersPage,
 });
@@ -100,7 +108,7 @@ function StarRating({ value }: { value: number }) {
 }
 
 function VerificationBadge({ status }: { status: VerificationStatus }) {
-  const config: Record<VerificationStatus, { style: string; icon: JSX.Element }> = {
+  const config: Record<VerificationStatus, { style: string; icon: ReactNode }> = {
     Terverifikasi: {
       style: "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400",
       icon: <CheckCircle className="h-3 w-3" />,
