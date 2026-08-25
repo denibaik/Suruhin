@@ -20,7 +20,8 @@ const navItems = [
 ];
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: async () => {
+  beforeLoad: async ({ location }) => {
+    if (location.pathname === "/admin/login") return;
     const admin = await getAdminStatus();
     if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
   },
