@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Outlet, useLocation } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/site/DashboardShell";
 import {
   LayoutDashboard,
@@ -24,6 +24,9 @@ export const Route = createFileRoute("/admin")({
 });
 
 function AdminPage() {
+  const location = useLocation();
+  if (location.pathname !== "/admin") return <Outlet />;
+
   return (
     <DashboardShell items={navItems} title="Dasbor Admin">
       <div className="grid gap-4 md:grid-cols-4">
