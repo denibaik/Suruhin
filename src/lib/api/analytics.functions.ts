@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
-import { requireAdmin } from "@/lib/admin-auth.server";
 import {
   analyticsCsv,
   getAnalyticsData,
@@ -45,13 +44,11 @@ export const trackAnalyticsEvents = createServerFn({ method: "POST" })
 export const getAnalyticsDashboard = createServerFn({ method: "POST" })
   .inputValidator(dateRange)
   .handler(async ({ data }) => {
-    await requireAdmin();
     return getAnalyticsData(data.from, data.to);
   });
 
 export const exportAnalyticsCsv = createServerFn({ method: "POST" })
   .inputValidator(dateRange)
   .handler(async ({ data }) => {
-    await requireAdmin();
     return { csv: await analyticsCsv(data.from, data.to) };
   });
