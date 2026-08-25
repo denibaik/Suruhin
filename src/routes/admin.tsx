@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/site/DashboardShell";
 import {
   LayoutDashboard,
@@ -8,7 +8,6 @@ import {
   LayoutTemplate,
   BarChart3,
 } from "lucide-react";
-import { getAdminStatus } from "@/lib/api/admin-auth.functions";
 
 const navItems = [
   { to: "/admin", label: "Ringkasan", icon: LayoutDashboard },
@@ -20,11 +19,6 @@ const navItems = [
 ];
 
 export const Route = createFileRoute("/admin")({
-  beforeLoad: async ({ location }) => {
-    if (location.pathname === "/admin/login") return;
-    const admin = await getAdminStatus();
-    if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
-  },
   head: () => ({ meta: [{ title: "Admin — Suruhin" }] }),
   component: AdminPage,
 });

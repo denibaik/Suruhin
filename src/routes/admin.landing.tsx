@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createFileRoute, Link, redirect, useRouter } from "@tanstack/react-router";
+import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { toast } from "sonner";
 import {
   LayoutDashboard,
@@ -42,7 +42,6 @@ import {
   type SectionHeading,
 } from "@/components/site/landing-content";
 import { landingIconNames } from "@/components/site/landing-icons";
-import { getAdminStatus } from "@/lib/api/admin-auth.functions";
 
 const adminNavItems = [
   { to: "/admin", label: "Ringkasan", icon: LayoutDashboard },
@@ -54,10 +53,6 @@ const adminNavItems = [
 ];
 
 export const Route = createFileRoute("/admin/landing")({
-  beforeLoad: async () => {
-    const admin = await getAdminStatus();
-    if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
-  },
   head: () => ({ meta: [{ title: "Landing Page — Admin Suruhin" }] }),
   loader: async () => getLandingEditor(),
   component: AdminLandingPage,

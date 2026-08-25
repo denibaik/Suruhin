@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { DashboardShell } from "@/components/site/DashboardShell";
-import { getAdminStatus } from "@/lib/api/admin-auth.functions";
 import {
   LayoutDashboard,
   Users,
@@ -27,10 +26,6 @@ const adminNavItems = [
 ];
 
 export const Route = createFileRoute("/admin/helpers")({
-  beforeLoad: async () => {
-    const admin = await getAdminStatus();
-    if (!admin.isAdmin) throw redirect({ to: "/admin/login" });
-  },
   head: () => ({ meta: [{ title: "Helper — Admin Suruhin" }] }),
   component: AdminHelpersPage,
 });
